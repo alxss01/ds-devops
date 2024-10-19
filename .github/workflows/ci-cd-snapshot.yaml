@@ -45,7 +45,7 @@ jobs:
 
     call_deploy:
         needs: call-build
-        uses: alxss01/ds-devops-reusables/.github/workflows/java-deployd.yaml@develop
+        uses: alxss01/ds-devops-reusables/.github/workflows/java-deploy.yaml@develop
         with:
             app-version: ${{ needs.call-build.outputs.app-version }}
 
