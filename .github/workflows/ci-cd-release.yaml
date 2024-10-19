@@ -1,0 +1,27 @@
+name: Continuous Integration
+run-name: Build started by ${{ github.actor }}
+
+on:
+    pull_request:
+        branches:
+            - main
+            - 'release/**'
+
+permissions:
+    contents: write
+
+jobs:
+    call-build:
+        uses: alxss01/ds-devops-reusables/java-build@develop
+        with:
+            sonar-cloud-enabled: ${{ inputs.sonar-cloud-enabled || vars.SONAR_CLOUD_ENABLED }}
+
+
+    call_deploy:
+        needs: call-build
+        uses: alxss01/ds-devops-reusables/java-deployd@develop
+        with:
+            app-version: ${{ needs.call-build.outputs.app-version }}
+
+
+

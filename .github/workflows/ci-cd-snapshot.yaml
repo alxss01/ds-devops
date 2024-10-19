@@ -1,0 +1,53 @@
+name: Continuous Integration
+run-name: Build started by ${{ github.actor }}
+
+on:
+    workflow_dispatch:
+        inputs:
+            sonar-cloud-enabled:
+                description: "Ativar scan do sonar"
+                required: true
+                type: choice
+                options:
+                    - true
+                    - false
+            owasp-zap-enabled:
+                description: "Ativar scan dependency check"
+                required: true
+                type: choice
+                options:
+                    - true
+                    - false
+            snyk-enabled:
+                description: "Ativar scan Snyk"
+                required: true
+                type: choice
+                options:
+                    - true
+                    - false
+            
+
+permissions:
+    contents: write
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    call-build:
+        uses: alxss01/ds-devops-reusables/java-build@develop
+        with:
+            sonar-cloud-enabled: ${{ inputs.sonar-cloud-enabled }}
+            owasp-zap: ${{ inputs.owasp-zap-enabled }}
+            snyk-enabled: ${{ inputs.snyk-enabled }}
+
+
+    call_deploy:
+        needs: call-build
+        uses: alxss01/ds-devops-reusables/java-deployd@develop
+        with:
+            app-version: ${{ needs.call-build.outputs.app-version }}
+
+
+
