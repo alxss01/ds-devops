@@ -36,7 +36,7 @@ concurrency:
 
 jobs:
     call-build:
-        uses: alxss01/ds-devops-reusables/java-build@develop
+        uses: alxss01/ds-devops-reusables/.github/workflows/java-build@develop
         with:
             sonar-cloud-enabled: ${{ inputs.sonar-cloud-enabled }}
             owasp-zap: ${{ inputs.owasp-zap-enabled }}
@@ -45,7 +45,7 @@ jobs:
 
     call_deploy:
         needs: call-build
-        uses: alxss01/ds-devops-reusables/java-deployd@develop
+        uses: alxss01/ds-devops-reusables/.github/workflows/java-deployd@develop
         with:
             app-version: ${{ needs.call-build.outputs.app-version }}
 
