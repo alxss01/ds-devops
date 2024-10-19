@@ -39,7 +39,7 @@ jobs:
         uses: alxss01/ds-devops-reusables/.github/workflows/java-build.yaml@develop
         with:
             sonar-cloud-enabled: ${{ inputs.sonar-cloud-enabled }}
-            owasp-zap: ${{ inputs.owasp-zap-enabled }}
+            owasp-zap-enabled: ${{ inputs.owasp-zap-enabled }}
             snyk-enabled: ${{ inputs.snyk-enabled }}
 
 
